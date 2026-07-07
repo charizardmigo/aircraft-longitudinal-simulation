@@ -193,4 +193,4 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ---
 
-**⭐If you find this project useful, please consider giving it a star!**          
+**⭐If you find this project useful, please consider giving it a star!**     
