@@ -28,7 +28,7 @@ This project implements a Lumped Parameter Model of a 3-metre glider's longitudi
 - **Mechanical rotational domain:** BLDC motor and propeller aerodynamic load
 - **Mechanical translational domain:** 1D thrust-to-drag force balance on the airframe
 
-The model reproduces a realistic 10-minute flight mission profile, predicting aircraft speed and battery current consumption across three throttle phases. Parameter fitting of the aerodynamic constants (`k_thrust`, `c_visc`) was performed manually to match the expected cruise velocity of a 3.9 kg glider (20–28 m/s).
+The model reproduces a realistic 10-minute flight mission profile, predicting aircraft speed and battery current consumption across three throttle phases. The aerodynamic constants (`k_thrust`, `c_visc`) were fitted manually so that the full-throttle steady-state speed falls within the expected speed range of a 3.9 kg glider (20–28 m/s).
 
 ---
 
@@ -71,7 +71,7 @@ The model reproduces a realistic 10-minute flight mission profile, predicting ai
 | Parameter | Symbol | Value | Unit | Description |
 |---|---|---|---|---|
 | Motor resistance | R | 0.05 | Ω | Low-resistance outrunner (D-Power AL42-07) |
-| Thrust coefficient | k_thrust | 0.05 | N/(rad/s) | Fitted to match 20–28 m/s cruise |
+| Thrust coefficient | k_thrust | 0.05 | N/(rad/s) | Fitted to reach 20–28 m/s at full throttle |
 | Aerodynamic damping | c_visc | 0.45 | N/(m/s) | Fitted viscous drag coefficient |
 
 ### 3.3 Throttle Profile (Load Scheme)
@@ -145,13 +145,15 @@ This will:
 Key observations:
 - The velocity response follows a **first-order exponential** profile, consistent with a lumped mass-damper system (time constant τ = m / c_visc ≈ 8.7 s)
 - Battery current responds instantaneously to throttle steps, confirming that the electrical time constant is negligible compared to the mechanical time constant
-- Steady-state cruise velocity at 35% throttle converges stably, validating the parameter fitting of `k_thrust` and `c_visc`
+- Steady-state speed at full throttle (~28 m/s) lies within the expected 20–28 m/s range, which was the target of the manual fitting of `k_thrust` and `c_visc`
+- At 35% cruise throttle, the speed converges stably to ~10 m/s, below the realistic cruise range. Because thrust and drag are both modelled as linear, steady-state speed scales roughly in proportion to throttle (0.35 × 28 m/s ≈ 10 m/s)
 
 ---
 
 ## 8. Known Limitations
 
-- **Linear drag model:** Real aerodynamic drag scales with v². A quadratic model would improve accuracy at higher speeds.
+- **Linear drag model:** Real aerodynamic drag scales with v². A quadratic model would improve accuracy at higher speeds and give more realistic cruise speeds at part throttle.
+- **No measured flight data:** The parameters were fitted to a target speed range, not to recorded flight data, so the model has not been validated against a real aircraft.
 - **Constant altitude assumption:** Lift and weight are assumed balanced. Climb and descent dynamics are not modelled.
 - **Ideal battery:** Voltage sag and capacity depletion over the 600-second mission are not accounted for.
 - **High peak current:** The ~360 A peak at full throttle is a theoretical maximum of the lumped model. A real ESC would apply current limiting.
