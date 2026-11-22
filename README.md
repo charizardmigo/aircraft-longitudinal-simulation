@@ -184,7 +184,7 @@ Hochschule Anhalt (Anhalt University of Applied Sciences)
 - Lumped parameter modelling of multi-domain physical systems
 - MATLAB/Simulink and Simscape modelling
 - Electromechanical system integration (electrical, rotational, translational)
-- Parameter identification and manual fitting
+- Parameter fitting to a target speed range
 - Throttle profile design and transient response analysis
 - Technical documentation
 
